@@ -28,35 +28,60 @@ import java.util.Map;
 
 /**
  * ApplicationConfig
- *
+ * 应用配置
  * @export
  */
 public class ApplicationConfig extends AbstractConfig {
 
     private static final long serialVersionUID = 5508512956753757169L;
 
-    // application name
+    // application name (必填)
+    /**
+     * 当前应用名称，用于注册中心计算应用间依赖关系，
+     * 注意：消费者和提供者应用名不要一样，此参数不是匹配条件，你当前项目叫什么名字就填什么，和提供者消费者角色无关
+     */
     private String name;
 
     // module version
+    /**
+     * 当前应用的版本
+     */
     private String version;
 
     // application owner
+    /**
+     * 应用负责人，用于服务治理，请填写负责人公司邮箱前缀
+     */
     private String owner;
 
     // application's organization (BU)
+    /**
+     * 组织名称
+     */
     private String organization;
 
     // architecture layer
+    /**
+     * 用于服务分层对应的架构
+     */
     private String architecture;
 
     // environment, e.g. dev, test or production
+    /**
+     * 应用环境，如：develop/test/product，
+     */
     private String environment;
 
     // Java compiler
+    /**
+     * Java字节码编译器
+     */
     private String compiler;
 
     // logger
+    /**
+     * 日志输出方式
+     */
     private String logger;
 
     // registry centers

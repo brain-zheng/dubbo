@@ -72,21 +72,51 @@ public final class URL implements Serializable {
 
     private static final long serialVersionUID = -1985165475234910535L;
 
+    /**
+     * 协议名
+     */
     private final String protocol;
-
+    /**
+     * 用户名
+     */
     private final String username;
-
+    /**
+     * 密码
+     */
     private final String password;
-
+    /**
+     * 地址
+     */
     // by default, host to registry
     private final String host;
-
+    /**
+     * 端口
+     */
     // by default, port to registry
     private final int port;
-
+    /**
+     * 路径（服务名）
+     */
     private final String path;
-
+    /**
+     * 参数集合
+     */
     private final Map<String, String> parameters;
+
+    /**
+     * URL举例：
+     * dubbo://192.168.3.17:20880/com.alibaba.dubbo.demo.DemoService?
+     * anyhost=true&application=demo-provider&default.delay=-1&default.retries=0&default.service.filter=demoFilter
+     * &delay=-1&dubbo=2.0.0&generic=false&interface=com.alibaba.dubbo.demo.DemoService&methods=sayHello&pid=19031
+     * &side=provider&timestamp=1519651641799
+     *
+     * 所有配置最终都将转换为 Dubbo URL，如上shili，并由服务提供方生成，经注册中心传递给消费方，
+     * 各属性对应 URL 的参数，参见配置项一览表中的 “对应URL参数” 列
+     * 格式为：protocol://username:password@host:port/path?key=value&key=value
+     *
+     * 通过方法 buildString() 生成
+     */
+
 
     // ==== cache ====
 

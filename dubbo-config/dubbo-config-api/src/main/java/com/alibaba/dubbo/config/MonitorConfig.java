@@ -22,6 +22,7 @@ import java.util.Map;
 
 /**
  * MonitorConfig
+ * 监控中心配置
  *
  * @export
  */
@@ -29,8 +30,14 @@ public class MonitorConfig extends AbstractConfig {
 
     private static final long serialVersionUID = -1184681514659198203L;
 
+    /**
+     * 监控中心协议，如果为protocol="registry"，表示从注册中心发现监控中心地址，否则直连监控中心。
+     */
     private String protocol;
 
+    /**
+     * 直连监控中心服务器地址
+     */
     private String address;
 
     private String username;

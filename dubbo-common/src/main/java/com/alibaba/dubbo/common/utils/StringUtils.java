@@ -387,6 +387,10 @@ public final class StringUtils {
         if (camelName == null || camelName.length() == 0) {
             return camelName;
         }
+        /**
+         * 这里的写法值得学习。
+         * 先把对象声明为null，当满足条件时才new一个对象出来，不提前在声明阶段就new一个对象，这有助于节省堆空间
+         */
         StringBuilder buf = null;
         for (int i = 0; i < camelName.length(); i++) {
             char ch = camelName.charAt(i);
