@@ -21,6 +21,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * InternalThreadFactory.
+ *
+ * 代码描述的是Dubbo对线程池中线程的命名规则，其作用是为了方便追踪信息
+ *
  */
 public class NamedThreadFactory implements ThreadFactory {
 

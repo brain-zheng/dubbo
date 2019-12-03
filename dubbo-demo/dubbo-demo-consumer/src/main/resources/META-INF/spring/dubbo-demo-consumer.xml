@@ -34,4 +34,11 @@
 
     <dubbo:reference id="callbackService" interface="com.alibaba.dubbo.callback.CallbackService" />
 
+    <!-- 泛化调用 generic="true"-->
+    <dubbo:reference id="genericServiceDemo" interface="com.alibaba.dubbo.genericservice.GenericService" generic="true"/>
+
+    <!-- dubbo 本地存根 stub 用于在进行RPC调用远程逻辑时进行一定的校验，该校验发生在消费方-->
+    <dubbo:reference id="userService" interface="com.alibaba.dubbo.stub.UserInterface"
+                     stub="com.alibaba.dubbo.stub.UserServiceStub" protocol="dubbo"/>
+
 </beans>
