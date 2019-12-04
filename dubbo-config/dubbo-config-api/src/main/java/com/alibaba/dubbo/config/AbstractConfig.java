@@ -122,16 +122,21 @@ public abstract class AbstractConfig implements Serializable {
         if (config == null) {
             return;
         }
+        // 获取前缀
         String prefix = "dubbo." + getTagName(config.getClass()) + ".";
+        // 获取方法数组
         Method[] methods = config.getClass().getMethods();
         for (Method method : methods) {
             try {
+                // 获取方法名
                 String name = method.getName();
                 if (name.length() > 3 && name.startsWith("set") && Modifier.isPublic(method.getModifiers())
                         && method.getParameterTypes().length == 1 && isPrimitive(method.getParameterTypes()[0])) {
+                    // 获取属性
                     String property = StringUtils.camelToSplitName(name.substring(3, 4).toLowerCase() + name.substring(4), ".");
-
+                    // 获取系统或属性文件中对应的值
                     String value = null;
+                    // 【启动参数变量】优先从带有 `Config#id` 的配置中获取，例如：`dubbo.application.demo-provider.name` 。
                     if (config.getId() != null && config.getId().length() > 0) {
                         String pn = prefix + config.getId() + "." + property;
                         value = System.getProperty(pn);
@@ -139,6 +144,7 @@ public abstract class AbstractConfig implements Serializable {
                             logger.info("Use System Property " + pn + " to config dubbo");
                         }
                     }
+                    // 【启动参数变量】获取不到，其次不带 `Config#id` 的配置中获取，例如：`dubbo.application.name` 。
                     if (value == null || value.length() == 0) {
                         String pn = prefix + property;
                         value = System.getProperty(pn);
@@ -146,6 +152,7 @@ public abstract class AbstractConfig implements Serializable {
                             logger.info("Use System Property " + pn + " to config dubbo");
                         }
                     }
+                    // 覆盖优先级为：启动参数变量 > XML 配置 > properties 配置，因此需要使用 getter 判断 XML 是否已经设置
                     if (value == null || value.length() == 0) {
                         Method getter;
                         try {
@@ -158,13 +165,17 @@ public abstract class AbstractConfig implements Serializable {
                             }
                         }
                         if (getter != null) {
+                            // 使用 getter 判断 XML 是否已经设置
                             if (getter.invoke(config) == null) {
+                                // 【properties 配置】优先从带有 `Config#id` 的配置中获取，例如：`dubbo.application.demo-provider.name` 。
                                 if (config.getId() != null && config.getId().length() > 0) {
                                     value = ConfigUtils.getProperty(prefix + config.getId() + "." + property);
                                 }
+                                // 【properties 配置】获取不到，其次不带 `Config#id` 的配置中获取，例如：`dubbo.application.name` 。
                                 if (value == null || value.length() == 0) {
                                     value = ConfigUtils.getProperty(prefix + property);
                                 }
+                                // 【properties 配置】老版本兼容，获取不到，最后不带 `Config#id` 的配置中获取，例如：`dubbo.protocol.name` 。
                                 if (value == null || value.length() == 0) {
                                     String legacyKey = legacyProperties.get(prefix + property);
                                     if (legacyKey != null && legacyKey.length() > 0) {
@@ -175,11 +186,13 @@ public abstract class AbstractConfig implements Serializable {
                             }
                         }
                     }
+                    // 获取到值，进行反射设置。 设置到传参config中
                     if (value != null && value.length() > 0) {
                         method.invoke(config, convertPrimitive(method.getParameterTypes()[0], value));
                     }
                 }
             } catch (Exception e) {
+                // 逻辑中间发生异常，不抛出异常，仅打印错误日志
                 logger.error(e.getMessage(), e);
             }
         }
