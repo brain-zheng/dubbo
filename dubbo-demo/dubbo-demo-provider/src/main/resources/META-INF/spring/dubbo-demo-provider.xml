@@ -53,4 +53,6 @@
     <dubbo:service interface="com.alibaba.dubbo.genericservice.GenericService" ref="genericServiceDemo"/>
 
     <dubbo:service interface="com.alibaba.dubbo.stub.UserInterface" ref="userServiceStubDemo" protocol="dubbo" retries="0"/>
+
+
 </beans>
