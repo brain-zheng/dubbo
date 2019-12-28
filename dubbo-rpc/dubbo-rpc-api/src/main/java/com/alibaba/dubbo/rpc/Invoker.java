@@ -18,6 +18,13 @@ package com.alibaba.dubbo.rpc;
 
 import com.alibaba.dubbo.common.Node;
 
+
+/*
+ * Invoker 是实体域，它是 Dubbo 的核心模型，其它模型都向它靠扰，或转换成它。
+ * 它代表一个可执行体，可向它发起 invoke 调用。
+ * 它有可能是一个本地的实现，也可能是一个远程的实现，也可能一个集群实现。
+ */
+
 /**
  * Invoker. (API/SPI, Prototype, ThreadSafe)
  *
@@ -28,17 +35,17 @@ import com.alibaba.dubbo.common.Node;
 public interface Invoker<T> extends Node {
 
     /**
-     * get service interface.
+     * get service interface.   获得service接口
      *
      * @return service interface.
      */
     Class<T> getInterface();
 
     /**
-     * invoke.
+     * invoke.      调用方法
      *
-     * @param invocation
-     * @return result
+     * @param invocation    会话域，它持有调用过程中的变量，比如方法名，参数等。      调用方法的入参
+     * @return result       会话域，它持有调用过程中返回值，异常等         调用方法的返回值
      * @throws RpcException
      */
     Result invoke(Invocation invocation) throws RpcException;

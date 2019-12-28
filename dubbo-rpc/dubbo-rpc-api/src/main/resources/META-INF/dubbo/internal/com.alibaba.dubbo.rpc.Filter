@@ -1,3 +1,4 @@
+# 拓展名=拓展实现类全限定名。
 echo=com.alibaba.dubbo.rpc.filter.EchoFilter
 generic=com.alibaba.dubbo.rpc.filter.GenericFilter
 genericimpl=com.alibaba.dubbo.rpc.filter.GenericImplFilter
