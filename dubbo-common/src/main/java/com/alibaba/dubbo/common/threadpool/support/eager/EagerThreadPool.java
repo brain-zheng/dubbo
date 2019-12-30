@@ -30,6 +30,13 @@ import java.util.concurrent.TimeUnit;
  * EagerThreadPool
  * When the core threads are all in busy,
  * create new thread instead of putting task into blocking queue.
+ *
+ * 优先创建Worker线程池。
+ * 在任务数量大于corePoolSize但是小于maximumPoolSize时，优先创建Worker来处理任务。
+ *
+ * 当任务数量大于maximumPoolSize时，将任务放入阻塞队列中。
+ * 阻塞队列充满时抛出RejectedExecutionException。
+ *
  */
 public class EagerThreadPool implements ThreadPool {
 
